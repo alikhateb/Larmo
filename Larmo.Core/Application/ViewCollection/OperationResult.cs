@@ -1,0 +1,25 @@
+﻿namespace Larmo.Core.Application.ViewCollection;
+
+public record OperationResult(
+    int Id,
+    string OperationType,
+    string Amount,
+    string CurrencyType,
+    string Date,
+    string Iban,
+    string BeneficiaryName,
+    string BeneficiaryCountry,
+    string BeneficiaryCity,
+    string BeneficiaryArea,
+    string BeneficiaryNearestMilestone,
+    string SourceOfFunds,
+    string SendingParty,
+    string ReceivingParty,
+    string ClientProfession,
+    string ClientIdentityNumber,
+    string ClientCountry,
+    string ClientCity,
+    string ClientArea,
+    string ClientNearestMilestone,
+    string BeneficiaryClientRelationship,
+    string BeneficiaryActivity);
