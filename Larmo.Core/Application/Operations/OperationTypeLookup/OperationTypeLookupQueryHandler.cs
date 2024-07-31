@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Larmo.Core.Application.Operations.OperationTypeLookUp;
 
-public sealed class OperationTypeLookupQueryHandler : IRequestHandler<OperationTypeLookupQuery, OperationTypeLookupResult[]>
+internal sealed class OperationTypeLookupQueryHandler : IRequestHandler<OperationTypeLookupQuery, OperationTypeLookupResult[]>
 {
     public Task<OperationTypeLookupResult[]> Handle(OperationTypeLookupQuery request, CancellationToken cancellationToken)
     {

@@ -2,7 +2,7 @@
 
 namespace Larmo.Core.Application.Operations.Add;
 
-public class AddOperationCommandValidator : AbstractValidator<AddOperationCommand>
+public sealed class AddOperationCommandValidator : AbstractValidator<AddOperationCommand>
 {
     public AddOperationCommandValidator()
     {

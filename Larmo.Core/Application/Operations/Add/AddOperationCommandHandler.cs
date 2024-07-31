@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Larmo.Core.Application.Operations.Add;
 
-internal class AddOperationCommandHandler(IOperationRepository operationRepository)
+internal sealed class AddOperationCommandHandler(IOperationRepository operationRepository)
     : IRequestHandler<AddOperationCommand>
 {
     public async Task Handle(AddOperationCommand request, CancellationToken cancellationToken)

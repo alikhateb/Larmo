@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Larmo.Core.Application.Operations.Update;
 
-internal class UpdateOperationCommandHandler(IOperationRepository operationRepository)
+internal sealed class UpdateOperationCommandHandler(IOperationRepository operationRepository)
     : IRequestHandler<UpdateOperationCommand>
 {
     public async Task Handle(UpdateOperationCommand request, CancellationToken cancellationToken)

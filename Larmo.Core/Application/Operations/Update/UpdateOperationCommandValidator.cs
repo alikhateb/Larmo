@@ -2,7 +2,7 @@
 
 namespace Larmo.Core.Application.Operations.Update;
 
-public class UpdateOperationCommandValidator : AbstractValidator<UpdateOperationCommand>
+public sealed class UpdateOperationCommandValidator : AbstractValidator<UpdateOperationCommand>
 {
     public UpdateOperationCommandValidator()
     {

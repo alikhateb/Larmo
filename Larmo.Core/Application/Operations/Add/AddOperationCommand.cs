@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Larmo.Core.Application.Operations.Add;
 
-public sealed record AddOperationCommand : IRequest
+public sealed class AddOperationCommand : IRequest
 {
     public OperationType OperationType { get; set; }
     public decimal Amount { get; set; }

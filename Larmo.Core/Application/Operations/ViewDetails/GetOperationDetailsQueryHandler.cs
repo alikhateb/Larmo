@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Larmo.Core.Application.Operations.ViewDetails;
 
-internal class GetOperationDetailsQueryHandler(IOperationRepository operationRepository)
+internal sealed class GetOperationDetailsQueryHandler(IOperationRepository operationRepository)
     : IRequestHandler<GetOperationDetailsQuery, OperationResult>
 {
     public async Task<OperationResult> Handle(GetOperationDetailsQuery request, CancellationToken cancellationToken)
