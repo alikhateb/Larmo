@@ -1,4 +1,4 @@
-﻿namespace Larmo.Core.Application.ViewCollection;
+﻿namespace Larmo.Core.Application.Operations;
 
 public record OperationResult(
     int Id,

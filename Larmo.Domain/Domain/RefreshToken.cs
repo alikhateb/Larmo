@@ -1,4 +1,4 @@
-﻿namespace Larmo.Domain.Domain.User;
+﻿namespace Larmo.Domain.Domain;
 
 public class RefreshToken : IEntity
 {

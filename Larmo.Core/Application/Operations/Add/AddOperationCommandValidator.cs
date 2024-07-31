@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Larmo.Core.Application.Add;
+namespace Larmo.Core.Application.Operations.Add;
 
 public class AddOperationCommandValidator : AbstractValidator<AddOperationCommand>
 {

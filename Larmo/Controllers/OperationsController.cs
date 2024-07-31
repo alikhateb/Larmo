@@ -1,15 +1,15 @@
-﻿using Larmo.Core.Application.Add;
-using Larmo.Core.Application.Update;
-using Larmo.Core.Application.ViewCollection;
-using Larmo.Core.Application.ViewDetails;
+﻿using Larmo.Core.Application.Operations;
+using Larmo.Core.Application.Operations.Add;
+using Larmo.Core.Application.Operations.OperationTypeLookUp;
+using Larmo.Core.Application.Operations.Update;
+using Larmo.Core.Application.Operations.ViewCollection;
+using Larmo.Core.Application.Operations.ViewDetails;
 using Larmo.Core.Paging;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Larmo.Controllers
 {
     [Route("api/[controller]")]
-    [AllowAnonymous]
     public class OperationsController : DefaultController
     {
         [HttpGet]
@@ -41,6 +41,12 @@ namespace Larmo.Controllers
             command.SetOperationId(operationId);
             await Mediator.Send(command, cancellationToken);
             return Ok();
+        }
+
+        [HttpGet("operation-type-lookup")]
+        public async Task<ActionResult<OperationTypeLookupResult[]>> OperationTypeLookup(CancellationToken cancellationToken = default)
+        {
+            return Ok(await Mediator.Send(new OperationTypeLookupQuery(), cancellationToken));
         }
     }
 }

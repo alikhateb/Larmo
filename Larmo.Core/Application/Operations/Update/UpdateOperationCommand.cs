@@ -1,10 +1,11 @@
 ﻿using Larmo.Domain.Domain;
 using MediatR;
 
-namespace Larmo.Core.Application.Add;
+namespace Larmo.Core.Application.Operations.Update;
 
-public sealed record AddOperationCommand : IRequest
+public sealed class UpdateOperationCommand : IRequest
 {
+    private int _operationId;
     public OperationType OperationType { get; set; }
     public decimal Amount { get; set; }
     public string CurrencyType { get; set; }
@@ -26,4 +27,6 @@ public sealed record AddOperationCommand : IRequest
     public string ClientNearestMilestone { get; set; }
     public string BeneficiaryClientRelationship { get; set; }
     public string BeneficiaryActivity { get; set; }
+    public void SetOperationId(int operationId) => _operationId = operationId;
+    public int GetOperationId() => _operationId;
 }

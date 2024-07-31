@@ -1,7 +1,6 @@
-﻿using Larmo.Core.Application.ViewCollection;
-using MediatR;
+﻿using MediatR;
 
-namespace Larmo.Core.Application.ViewDetails;
+namespace Larmo.Core.Application.Operations.ViewDetails;
 
 public sealed class GetOperationDetailsQuery : IRequest<OperationResult>
 {

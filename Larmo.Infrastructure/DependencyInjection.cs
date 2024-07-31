@@ -20,6 +20,7 @@ public static class DependencyInjection
     {
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IOperationRepository, OperationRepository>();
+        services.AddScoped<INotificationRepository, NotificationRepository>();
     }
 
     private static void ConfigureBaseContext(this IServiceCollection services, IConfiguration configuration)

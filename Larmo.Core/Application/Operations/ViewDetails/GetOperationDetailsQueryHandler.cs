@@ -1,15 +1,14 @@
-﻿using Larmo.Core.Application.ViewCollection;
-using Larmo.Core.Repository;
+﻿using Larmo.Core.Repository;
 using MediatR;
 
-namespace Larmo.Core.Application.ViewDetails;
+namespace Larmo.Core.Application.Operations.ViewDetails;
 
 internal class GetOperationDetailsQueryHandler(IOperationRepository operationRepository)
     : IRequestHandler<GetOperationDetailsQuery, OperationResult>
 {
     public async Task<OperationResult> Handle(GetOperationDetailsQuery request, CancellationToken cancellationToken)
     {
-        var specification = new GetOperationByIdSpecification(request.GetOperationId());
+        var specification = new OperationSpecification(request.GetOperationId());
         var operation = await operationRepository.FirstOrDefaultAsync(specification, cancellationToken);
         if (operation is null)
             throw new NullReferenceException("no item found");

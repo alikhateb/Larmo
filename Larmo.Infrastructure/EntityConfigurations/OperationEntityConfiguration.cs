@@ -31,9 +31,5 @@ public class OperationEntityConfiguration : IEntityTypeConfiguration<Operation>
         builder.Property(l => l.SourceOfFunds).IsRequired().HasMaxLength(250);
         builder.Property(l => l.OperationType).IsRequired().HasMaxLength(100);
         builder.Property(l => l.Date).IsRequired().HasMaxLength(100);
-
-        //builder.Property(l => l.OperationType).IsRequired().HasConversion(
-        //    x => x.ToString(),
-        //    x => Enum.Parse<OperationType>(x));
     }
 }

@@ -3,7 +3,7 @@ using Larmo.Core.Paging;
 using Larmo.Core.Repository;
 using MediatR;
 
-namespace Larmo.Core.Application.ViewCollection;
+namespace Larmo.Core.Application.Operations.ViewCollection;
 
 internal class GetOperationCollectionQueryHandler(IOperationRepository operationRepository)
     : IRequestHandler<GetOperationCollectionQuery, PageResponse<OperationResult>>

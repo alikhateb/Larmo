@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Larmo.Domain.Domain.User
+namespace Larmo.Domain.Domain
 {
     public class User : IdentityUser<Guid>, IEntity
     {

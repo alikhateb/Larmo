@@ -1,4 +1,4 @@
-﻿using Larmo.Domain.Domain.User;
+﻿using Larmo.Domain.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

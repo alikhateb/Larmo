@@ -2,12 +2,12 @@
 using Larmo.Domain.Domain;
 using MediatR;
 
-namespace Larmo.Core.Application.Update;
+namespace Larmo.Core.Application.Operations.Add;
 
-internal class UpdateOperationCommandHandler(IOperationRepository operationRepository)
-    : IRequestHandler<UpdateOperationCommand>
+internal class AddOperationCommandHandler(IOperationRepository operationRepository)
+    : IRequestHandler<AddOperationCommand>
 {
-    public async Task Handle(UpdateOperationCommand request, CancellationToken cancellationToken)
+    public async Task Handle(AddOperationCommand request, CancellationToken cancellationToken)
     {
         var operation = new Operation
         {
@@ -34,7 +34,7 @@ internal class UpdateOperationCommandHandler(IOperationRepository operationRepos
         operation.SetAmount(request.Amount);
         operation.SetDate(request.Date);
         operation.SetOperationType(request.OperationType);
-        operation.SetId(request.GetOperationId());
-        await operationRepository.UpdateAsync(operation, cancellationToken);
+
+        await operationRepository.AddAsync(operation, cancellationToken);
     }
 }
