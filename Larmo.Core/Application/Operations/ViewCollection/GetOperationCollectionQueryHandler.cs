@@ -1,6 +1,6 @@
-﻿using Larmo.Core.Extension;
-using Larmo.Core.Paging;
-using Larmo.Core.Repository;
+﻿using Larmo.Core.Repository;
+using Larmo.Shared.Application.Paging;
+using Larmo.Shared.Extension;
 using MediatR;
 
 namespace Larmo.Core.Application.Operations.ViewCollection;

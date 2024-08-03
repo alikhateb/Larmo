@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Larmo.Infrastructure.Migrations
 {
-    [DbContext(typeof(BaseContext))]
+    [DbContext(typeof(ApplicationContext))]
     [Migration("20240725181842_RenameIban")]
     partial class RenameIban
     {

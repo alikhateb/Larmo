@@ -1,10 +1,11 @@
 ﻿using Larmo.Core.Application.Operations;
 using Larmo.Core.Application.Operations.Add;
-using Larmo.Core.Application.Operations.OperationTypeLookUp;
+using Larmo.Core.Application.Operations.OperationTypeLookup;
 using Larmo.Core.Application.Operations.Update;
 using Larmo.Core.Application.Operations.ViewCollection;
 using Larmo.Core.Application.Operations.ViewDetails;
-using Larmo.Core.Paging;
+using Larmo.Shared.Application.Paging;
+using Larmo.Shared.Presentation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Larmo.Controllers

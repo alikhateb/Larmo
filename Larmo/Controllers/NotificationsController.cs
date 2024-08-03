@@ -4,7 +4,8 @@ using Larmo.Core.Application.Notifications.GenderLookup;
 using Larmo.Core.Application.Notifications.GetViewCollection;
 using Larmo.Core.Application.Notifications.MakeAsRead;
 using Larmo.Core.Application.Notifications.MaritalStatusLookup;
-using Larmo.Core.Paging;
+using Larmo.Shared.Application.Paging;
+using Larmo.Shared.Presentation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Larmo.Controllers

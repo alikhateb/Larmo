@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using FluentValidation;
-using Larmo.Core.Behaviors;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Larmo.Core;
@@ -14,12 +13,11 @@ public static class DependencyInjection
 
     private static void ConfigureGenerics(this IServiceCollection services)
     {
-        //services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
         services.AddMediatR(configuration =>
         {
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            configuration.AddOpenRequestPreProcessor(typeof(ValidationProcessor<>));
         });
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }

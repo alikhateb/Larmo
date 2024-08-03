@@ -11,23 +11,21 @@ public static class DependencyInjection
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHttpContextAccessor();
-        services.ConfigureBaseContext(configuration);
+        services.ConfigureContext(configuration);
         services.ConfigureGenerics();
     }
 
     private static void ConfigureGenerics(this IServiceCollection services)
     {
-        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IOperationRepository, OperationRepository>();
         services.AddScoped<INotificationRepository, NotificationRepository>();
     }
 
-    private static void ConfigureBaseContext(this IServiceCollection services, IConfiguration configuration)
+    private static void ConfigureContext(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Default");
 
-        services.AddDbContext<BaseContext>(options =>
+        services.AddDbContext<ApplicationContext>(options =>
         {
             options.UseNpgsql(connectionString, builder =>
             {

@@ -1,5 +1,5 @@
 ﻿using MediatR;
 
-namespace Larmo.Core.Application.Operations.OperationTypeLookUp;
+namespace Larmo.Core.Application.Operations.OperationTypeLookup;
 
 public sealed class OperationTypeLookupQuery : IRequest<OperationTypeLookupResult[]>;

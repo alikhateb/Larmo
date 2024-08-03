@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Larmo.Infrastructure.Migrations
 {
-    [DbContext(typeof(BaseContext))]
+    [DbContext(typeof(ApplicationContext))]
     partial class BaseContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

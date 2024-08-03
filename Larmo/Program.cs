@@ -1,11 +1,11 @@
-using Larmo;
 using Larmo.Core;
-using Larmo.Domain;
-using Larmo.Extension;
 using Larmo.Infrastructure;
-using Larmo.Infrastructure.Context;
-using Larmo.Middleware;
 using System.Text.Json.Serialization;
+using Larmo.Configurations.Cors;
+using Larmo.Infrastructure.Context;
+using Larmo.Shared;
+using Larmo.Shared.Extension;
+using Larmo.Shared.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,17 +20,18 @@ builder.Services.AddControllers()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddCorsSetup(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddCore();
-builder.Services.AddCorsSetup();
-builder.Services.AddDomain();
+builder.Services.AddShared();
 builder.Services.AddSingleton<ExceptionMiddleware>();
 
 var app = builder.Build();
 
 app.UseExceptionMiddleware();
-
-app.UseAutomaticMigration<BaseContext>();
+app.UseAutomaticMigration<ApplicationContext>();
 app.UseCorsSetup();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -1,7 +1,7 @@
 ﻿using Larmo.Domain.Domain;
 using MediatR;
 
-namespace Larmo.Core.Application.Operations.OperationTypeLookUp;
+namespace Larmo.Core.Application.Operations.OperationTypeLookup;
 
 internal sealed class OperationTypeLookupQueryHandler : IRequestHandler<OperationTypeLookupQuery, OperationTypeLookupResult[]>
 {
