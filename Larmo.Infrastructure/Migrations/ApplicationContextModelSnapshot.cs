@@ -3,7 +3,6 @@ using System;
 using Larmo.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,11 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Larmo.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240731225238_AddNotification")]
-    partial class AddNotification
+    partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,6 +21,142 @@ namespace Larmo.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Larmo.Domain.Domain.Identity.Group", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Groups", (string)null);
+                });
+
+            modelBuilder.Entity("Larmo.Domain.Domain.Identity.GroupRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("GroupId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("GroupRole");
+                });
+
+            modelBuilder.Entity("Larmo.Domain.Domain.Identity.Role", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DependOn")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ModuleName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles", (string)null);
+                });
+
+            modelBuilder.Entity("Larmo.Domain.Domain.Identity.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("Larmo.Domain.Domain.Identity.UserGroup", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("GroupId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserGroup");
+                });
 
             modelBuilder.Entity("Larmo.Domain.Domain.Notification", b =>
                 {
@@ -255,81 +388,40 @@ namespace Larmo.Infrastructure.Migrations
                     b.ToTable("Operation", (string)null);
                 });
 
-            modelBuilder.Entity("Larmo.Domain.Domain.User", b =>
+            modelBuilder.Entity("Larmo.Domain.Domain.Identity.GroupRole", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasOne("Larmo.Domain.Domain.Identity.Group", "Group")
+                        .WithMany("GroupRoles")
+                        .HasForeignKey("GroupId");
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
+                    b.HasOne("Larmo.Domain.Domain.Identity.Role", "Role")
+                        .WithMany("GroupRoles")
+                        .HasForeignKey("RoleId");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
+                    b.Navigation("Group");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users", (string)null);
+                    b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Larmo.Domain.Domain.User", b =>
+            modelBuilder.Entity("Larmo.Domain.Domain.Identity.User", b =>
                 {
-                    b.OwnsOne("Larmo.Domain.Domain.RefreshToken", "RefreshToken", b1 =>
+                    b.OwnsOne("Larmo.Domain.Domain.Identity.RefreshToken", "RefreshToken", b1 =>
                         {
-                            b1.Property<Guid>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("uuid");
+                            b1.Property<string>("Id")
+                                .HasColumnType("text");
 
                             b1.Property<DateTime>("CreatedOn")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<DateTime>("ExpireOn")
                                 .HasColumnType("timestamp with time zone");
 
                             b1.Property<DateTime?>("ModifiedOn")
                                 .HasColumnType("timestamp with time zone");
 
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uuid");
+                            b1.Property<string>("UserId")
+                                .IsRequired()
+                                .HasColumnType("text");
 
                             b1.Property<string>("Value")
                                 .HasColumnType("text");
@@ -346,6 +438,38 @@ namespace Larmo.Infrastructure.Migrations
                         });
 
                     b.Navigation("RefreshToken");
+                });
+
+            modelBuilder.Entity("Larmo.Domain.Domain.Identity.UserGroup", b =>
+                {
+                    b.HasOne("Larmo.Domain.Domain.Identity.Group", "Group")
+                        .WithMany("UserGroups")
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("Larmo.Domain.Domain.Identity.User", "User")
+                        .WithMany("UserGroups")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Larmo.Domain.Domain.Identity.Group", b =>
+                {
+                    b.Navigation("GroupRoles");
+
+                    b.Navigation("UserGroups");
+                });
+
+            modelBuilder.Entity("Larmo.Domain.Domain.Identity.Role", b =>
+                {
+                    b.Navigation("GroupRoles");
+                });
+
+            modelBuilder.Entity("Larmo.Domain.Domain.Identity.User", b =>
+                {
+                    b.Navigation("UserGroups");
                 });
 #pragma warning restore 612, 618
         }

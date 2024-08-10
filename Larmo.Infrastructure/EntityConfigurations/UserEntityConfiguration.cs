@@ -1,4 +1,4 @@
-﻿using Larmo.Domain.Domain;
+﻿using Larmo.Domain.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,11 +10,18 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
     {
         builder.ToTable("Users");
 
-        builder.OwnsOne<RefreshToken>(user => user.RefreshToken, navigationBuilder =>
+        builder.HasMany(u => u.UserGroups)
+            .WithOne(ug => ug.User)
+            .HasForeignKey(ug => ug.UserId);
+
+        builder.OwnsOne(user => user.RefreshToken, navigationBuilder =>
         {
+            navigationBuilder.WithOwner()
+                .HasForeignKey(t => t.UserId);
             navigationBuilder.ToTable("User.RefreshTokens");
-            navigationBuilder.WithOwner().HasForeignKey(t => t.UserId);
             navigationBuilder.HasKey(t => t.Id);
         });
+
+        builder.Navigation(u => u.UserGroups).AutoInclude(false);
     }
 }

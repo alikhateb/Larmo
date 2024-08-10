@@ -15,14 +15,13 @@ public static class MigrationExtension
     public static IApplicationBuilder UseAutomaticMigration<TContext>(this IApplicationBuilder appBuilder)
         where TContext : DbContext
     {
-        using var scope = appBuilder.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
-            ?.CreateScope();
+        using var scope = appBuilder.ApplicationServices.GetRequiredService<IServiceScopeFactory>()?.CreateScope();
 
         var context = scope?.ServiceProvider.GetRequiredService<TContext>();
 
-        if (context.Database.GetPendingMigrations().Any())
+        if (context?.Database.GetPendingMigrations().Any() ?? false)
         {
-            context?.Database.Migrate();
+            context.Database.Migrate();
         }
 
         return appBuilder;
