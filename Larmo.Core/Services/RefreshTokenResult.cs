@@ -1,7 +1,8 @@
 ﻿namespace Larmo.Core.Services;
 
-public class RefreshTokenResult
+public sealed record RefreshTokenResult
 {
-    public Guid UserId { get; set; }
+    public string UserId { get; set; }
     public string RefreshToken { get; set; }
+    public DateTime ExpireOn { get; set; }
 }

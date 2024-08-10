@@ -43,6 +43,11 @@ internal sealed class CreateUserCommandHandler(
 
         var claim = GenerateClaims(user.Id, user.Email, user.UserName, []);
         var token = tokenService.GenerateToken(user.Id, claim);
+
+        var refreshToken = RefreshToken.Create(value: token.RefreshToken.RefreshToken,
+            expireOn: token.RefreshToken.ExpireOn);
+        user.RefreshToken = refreshToken;
+        await identityRepository.UpdateAsync(user, cancellationToken);
         return token;
     }
 

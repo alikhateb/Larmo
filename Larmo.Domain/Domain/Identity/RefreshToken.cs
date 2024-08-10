@@ -13,12 +13,11 @@ public class RefreshToken
     public DateTime CreatedOn { get; set; }
     public DateTime? ModifiedOn { get; set; }
 
-    public static RefreshToken Create(string userId, string value, DateTime expireOn)
+    public static RefreshToken Create(string value, DateTime expireOn)
     {
         var user = new RefreshToken
         {
             Id = Guid.NewGuid().ToString("N"),
-            UserId = userId,
             Value = value,
             CreatedOn = DateTime.UtcNow,
             ExpireOn = expireOn
