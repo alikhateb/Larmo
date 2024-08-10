@@ -6,6 +6,7 @@ using Larmo.Infrastructure.Context;
 using Larmo.Shared;
 using Larmo.Shared.Extension;
 using Larmo.Shared.Middleware;
+using Larmo.Configurations.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,12 +20,13 @@ builder.Services.AddControllers()
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
+builder.Services.AddSwagger();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddCorsSetup(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddCore();
+builder.Services.AddCore(builder.Configuration);
 builder.Services.AddShared();
 builder.Services.AddSingleton<ExceptionMiddleware>();
 
@@ -40,9 +42,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseExceptionMiddleware();
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

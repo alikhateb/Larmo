@@ -20,5 +20,7 @@ public class RoleEntityConfiguration : IEntityTypeConfiguration<Role>
         builder.HasMany(r => r.GroupRoles)
             .WithOne(gr => gr.Role)
             .HasForeignKey(gr => gr.RoleId);
+
+        builder.Navigation(u => u.GroupRoles).AutoInclude(false);
     }
 }

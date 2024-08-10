@@ -22,6 +22,7 @@ public class User : IdentityUser<string>
             Id = Guid.NewGuid().ToString("N"),
             PhoneNumber = phoneNumber,
             Email = email,
+            NormalizedEmail = email.ToUpper(),
             UserName = userName,
             CreatedOn = DateTime.UtcNow
         };

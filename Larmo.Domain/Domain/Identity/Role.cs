@@ -1,6 +1,8 @@
-﻿namespace Larmo.Domain.Domain.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
-public class Role
+namespace Larmo.Domain.Domain.Identity;
+
+public class Role : IdentityRole<string>
 {
     private readonly List<GroupRole> _groupRoles = [];
 

@@ -21,5 +21,8 @@ public class GroupEntityConfiguration : IEntityTypeConfiguration<Group>
         builder.HasMany(g => g.GroupRoles)
             .WithOne(ug => ug.Group)
             .HasForeignKey(ug => ug.GroupId);
+
+        builder.Navigation(u => u.UserGroups).AutoInclude(false);
+        builder.Navigation(u => u.GroupRoles).AutoInclude(false);
     }
 }
