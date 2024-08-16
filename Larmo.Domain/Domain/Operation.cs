@@ -2,27 +2,27 @@
 
 public class Operation
 {
-    private string _amount;
-    private string _clientIdentityNumber;
-    private string _iban;
-    private string _currencyType;
-    private string _beneficiaryName;
-    private string _beneficiaryCountry;
-    private string _beneficiaryCity;
-    private string _beneficiaryArea;
-    private string _beneficiaryNearestMilestone;
-    private string _sourceOfFunds;
-    private string _sendingParty;
-    private string _receivingParty;
-    private string _clientProfession;
-    private string _clientCountry;
-    private string _clientCity;
-    private string _clientArea;
-    private string _clientNearestMilestone;
-    private string _beneficiaryClientRelationship;
-    private string _beneficiaryActivity;
-    private string _operationType;
-    private string _date;
+    //private string _amount;
+    //private string _clientIdentityNumber;
+    //private string _iban;
+    //private string _currencyType;
+    //private string _beneficiaryName;
+    //private string _beneficiaryCountry;
+    //private string _beneficiaryCity;
+    //private string _beneficiaryArea;
+    //private string _beneficiaryNearestMilestone;
+    //private string _sourceOfFunds;
+    //private string _sendingParty;
+    //private string _receivingParty;
+    //private string _clientProfession;
+    //private string _clientCountry;
+    //private string _clientCity;
+    //private string _clientArea;
+    //private string _clientNearestMilestone;
+    //private string _beneficiaryClientRelationship;
+    //private string _beneficiaryActivity;
+    //private string _operationType;
+    //private string _date;
 
     public int Id { get; private set; }
 
@@ -175,7 +175,7 @@ public class Operation
 
     public void SetAmount(decimal amount)
     {
-        Amount = amount.ToString("0.000");
+        Amount = amount.ToString("0");
     }
 
     public void SetOperationType(OperationType operationType)

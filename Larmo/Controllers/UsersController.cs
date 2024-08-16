@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Larmo.Controllers;
 
+[AllowAnonymous]
 [Route("api/[controller]")]
 public class UsersController : DefaultController
 {

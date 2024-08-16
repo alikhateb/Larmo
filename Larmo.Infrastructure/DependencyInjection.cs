@@ -1,6 +1,8 @@
 ﻿using Larmo.Core.Repository;
+using Larmo.Domain.Domain.Identity;
 using Larmo.Infrastructure.Context;
 using Larmo.Infrastructure.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,12 +15,14 @@ public static class DependencyInjection
     {
         services.ConfigureContext(configuration);
         services.ConfigureGenerics();
+        services.ConfigureIdentity();
     }
 
     private static void ConfigureGenerics(this IServiceCollection services)
     {
         services.AddScoped<IOperationRepository, OperationRepository>();
         services.AddScoped<INotificationRepository, NotificationRepository>();
+        services.AddScoped(typeof(IIdentityRepository<>), typeof(IdentityRepository<>));
     }
 
     private static void ConfigureContext(this IServiceCollection services, IConfiguration configuration)
@@ -31,6 +35,24 @@ public static class DependencyInjection
             {
                 builder.EnableRetryOnFailure(5);
             });
+        });
+    }
+
+    private static void ConfigureIdentity(this IServiceCollection services)
+    {
+        services.AddIdentity<User, Role>()
+            .AddEntityFrameworkStores<ApplicationContext>()
+            .AddDefaultTokenProviders();
+
+        services.Configure<IdentityOptions>(options =>
+        {
+            // Default Password settings.
+            options.Password.RequireDigit = true;
+            options.Password.RequireLowercase = true;
+            options.Password.RequireUppercase = true;
+            options.Password.RequireNonAlphanumeric = true;
+            options.Password.RequiredLength = 6;
+            options.Password.RequiredUniqueChars = 1;
         });
     }
 }

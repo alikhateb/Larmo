@@ -15,4 +15,9 @@ public class Repository<T> : RepositoryBase<T>, IRepository<T>
     {
         return ApplySpecification(specification);
     }
+
+    public IQueryable<TResult> AsPage<TResult>(ISpecification<T, TResult> specification)
+    {
+        return ApplySpecification(specification);
+    }
 }

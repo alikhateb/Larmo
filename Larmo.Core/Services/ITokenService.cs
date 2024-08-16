@@ -1,7 +1,9 @@
-﻿namespace Larmo.Core.Services;
+﻿using System.Security.Claims;
+
+namespace Larmo.Core.Services;
 
 public interface ITokenService
 {
-    Task<TokenResult> GenerateToken(TokenResult model);
-    Task<TokenResult> RefreshToken(TokenResult model);
+    AccessTokenResult GenerateToken(string userId, Claim[] claims);
+    AccessTokenResult RefreshToken(AccessTokenResult model);
 }

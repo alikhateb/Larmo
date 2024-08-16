@@ -2,28 +2,28 @@
 
 public sealed record NotificationResult
 {
-    public int Id { get; set; }
-    public string FullName { get; set; }
-    public string MotherName { get; set; }
-    public string Gender { get; set; }
-    public string MaritalStatus { get; set; }
-    public string Profession { get; set; }
-    public string Employer { get; set; }
-    public DateTime StartWorkDate { get; set; }
-    public string IdentityNumber { get; set; }
-    public DateTime IdentityIssueDate { get; set; }
-    public DateTime IdentityExpiryDate { get; set; }
-    public bool IsLibyanNationality { get; set; }
-    public string Nationality { get; set; }
-    public bool Resident { get; set; }
-    public string PassportNumber { get; set; }
-    public DateTime PassportNumberIssueDate { get; set; }
-    public DateTime PassportNumberExpiryDate { get; set; }
-    public string PhoneNumber { get; set; }
-    public string Email { get; set; }
-    public string City { get; set; }
-    public string Area { get; set; }
-    public string Street { get; set; }
-    public string NearestMilestone { get; set; }
-    public bool IsChecked { get; set; }
+    public int Id { get; init; }
+    public string FullName { get; init; }
+    public string MotherName { get; init; }
+    public string Gender { get; init; }
+    public string MaritalStatus { get; init; }
+    public string Profession { get; init; }
+    public string Employer { get; init; }
+    public DateTime StartWorkDate { get; init; }
+    public string IdentityNumber { get; init; }
+    public DateTime IdentityIssueDate { get; init; }
+    public DateTime IdentityExpiryDate { get; init; }
+    public bool IsLibyanNationality { get; init; }
+    public string Nationality { get; init; }
+    public bool Resident { get; init; }
+    public string PassportNumber { get; init; }
+    public DateTime PassportNumberIssueDate { get; init; }
+    public DateTime PassportNumberExpiryDate { get; init; }
+    public string PhoneNumber { get; init; }
+    public string Email { get; init; }
+    public string City { get; init; }
+    public string Area { get; init; }
+    public string Street { get; init; }
+    public string NearestMilestone { get; init; }
+    public bool IsChecked { get; init; }
 }

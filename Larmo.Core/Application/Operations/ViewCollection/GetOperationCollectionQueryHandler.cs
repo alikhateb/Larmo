@@ -13,34 +13,6 @@ internal sealed class GetOperationCollectionQueryHandler(IOperationRepository op
         var operations = await operationRepository.AsPage(new OperationSpecification())
             .WithPagingOptions(request, cancellationToken);
 
-        var result = new List<OperationResult>();
-
-        foreach (var operation in operations.Items)
-        {
-            result.Add(new OperationResult(Id: operation.Id,
-                OperationType: operation.OperationType,
-                Amount: operation.Amount,
-                CurrencyType: operation.CurrencyType,
-                Date: operation.Date,
-                Iban: operation.Iban,
-                BeneficiaryActivity: operation.BeneficiaryActivity,
-                BeneficiaryName: operation.BeneficiaryName,
-                BeneficiaryCountry: operation.BeneficiaryCountry,
-                BeneficiaryCity: operation.BeneficiaryCity,
-                BeneficiaryArea: operation.BeneficiaryArea,
-                BeneficiaryNearestMilestone: operation.BeneficiaryNearestMilestone,
-                SourceOfFunds: operation.SourceOfFunds,
-                SendingParty: operation.SendingParty,
-                ReceivingParty: operation.ReceivingParty,
-                ClientProfession: operation.ClientProfession,
-                ClientIdentityNumber: operation.ClientIdentityNumber,
-                ClientCountry: operation.ClientCountry,
-                ClientCity: operation.ClientCity,
-                ClientArea: operation.ClientArea,
-                ClientNearestMilestone: operation.ClientNearestMilestone,
-                BeneficiaryClientRelationship: operation.BeneficiaryClientRelationship));
-        }
-
-        return new PageResponse<OperationResult>(result, operations.TotalCount, operations.CurrentPage, operations.PageSize);
+        return operations;
     }
 }

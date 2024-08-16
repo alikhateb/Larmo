@@ -6,10 +6,12 @@ using Larmo.Core.Application.Operations.ViewCollection;
 using Larmo.Core.Application.Operations.ViewDetails;
 using Larmo.Shared.Application.Paging;
 using Larmo.Shared.Presentation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Larmo.Controllers;
 
+[AllowAnonymous]
 [Route("api/[controller]")]
 public class OperationsController : DefaultController
 {
