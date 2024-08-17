@@ -4,33 +4,18 @@ namespace Larmo.Domain.Domain.Identity;
 
 public class Role : IdentityRole<string>
 {
-    private readonly List<GroupRole> _groupRoles = [];
-
     private Role()
     {
     }
 
-    public string Id { get; set; }
-    public string Name { get; set; }
-    public string DependOn { get; set; }
-    public string ModuleName { get; set; }
-    public IReadOnlyCollection<GroupRole> GroupRoles => _groupRoles;
-
-    public static Role Create(string name, string moduleName, string dependOn)
+    public static Role Create(string name)
     {
         var role = new Role
         {
             Id = Guid.NewGuid().ToString("N"),
-            Name = name,
-            ModuleName = moduleName,
-            DependOn = dependOn
+            Name = name
         };
 
         return role;
-    }
-
-    public void AddGroupRole(GroupRole groupRole)
-    {
-        _groupRoles.Add(groupRole);
     }
 }

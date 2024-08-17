@@ -41,6 +41,7 @@ public static class DependencyInjection
     private static void ConfigureIdentity(this IServiceCollection services)
     {
         services.AddIdentity<User, Role>()
+            .AddRoles<Role>()
             .AddEntityFrameworkStores<ApplicationContext>()
             .AddDefaultTokenProviders();
 

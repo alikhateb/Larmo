@@ -10,17 +10,8 @@ public class RoleEntityConfiguration : IEntityTypeConfiguration<Role>
     {
         builder.ToTable("Roles");
 
-        builder.Property(r => r.Name)
-            .IsRequired()
-            .HasMaxLength(100);
-        builder.Property(r => r.ModuleName)
-            .IsRequired()
-            .HasMaxLength(100);
-
-        builder.HasMany(r => r.GroupRoles)
-            .WithOne(gr => gr.Role)
-            .HasForeignKey(gr => gr.RoleId);
-
-        builder.Navigation(u => u.GroupRoles).AutoInclude(false);
+        builder.HasMany<UserRole>()
+            .WithOne(userRole => userRole.Role)
+            .HasForeignKey(userRole => userRole.RoleId);
     }
 }

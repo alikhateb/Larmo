@@ -10,9 +10,13 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
     {
         builder.ToTable("Users");
 
-        builder.HasMany(u => u.UserGroups)
-            .WithOne(ug => ug.User)
-            .HasForeignKey(ug => ug.UserId);
+        builder.HasMany(user => user.UserRoles)
+            .WithOne(userRole => userRole.User)
+            .HasForeignKey(userRole => userRole.UserId);
+
+        builder.HasMany(user => user.UserPermissions)
+            .WithOne(userPermission => userPermission.User)
+            .HasForeignKey(userPermission => userPermission.UserId);
 
         builder.OwnsOne(user => user.RefreshToken, navigationBuilder =>
         {
@@ -22,6 +26,6 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
             navigationBuilder.HasKey(t => t.Id);
         });
 
-        builder.Navigation(u => u.UserGroups).AutoInclude(false);
+        builder.Navigation(u => u.UserPermissions).AutoInclude(false);
     }
 }
