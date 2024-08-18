@@ -4,6 +4,7 @@ using System.Text.Json;
 using Larmo.Core.Repository;
 using Larmo.Core.Services;
 using Larmo.Domain.Domain.Identity;
+using Larmo.Shared.Common;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
@@ -12,7 +13,8 @@ namespace Larmo.Core.Application.Users.Create;
 internal sealed class CreateUserCommandHandler(
     IIdentityRepository<User> identityRepository,
     ITokenService tokenService,
-    UserManager<User> userManager)
+    UserManager<User> userManager,
+    RoleManager<IdentityRole<string>> roleManager)
     : IRequestHandler<CreateUserCommand, AccessTokenResult>
 {
     public async Task<AccessTokenResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -31,31 +33,40 @@ internal sealed class CreateUserCommandHandler(
         var identityResult = await userManager.CreateAsync(user, request.Password);
         if (!identityResult.Succeeded)
         {
-            var errorMessages = new List<string>();
-            foreach (var error in identityResult.Errors)
-            {
-                errorMessages.Add(error.Description);
-            }
-
+            var errorMessages = identityResult.Errors.Select(error => error.Description).ToList();
             var errorMessage = string.Join("\n", errorMessages);
             throw new Exception(message: errorMessage);
         }
 
-        var claim = GenerateClaims(user.Id, user.Email, user.UserName, []);
-        var token = tokenService.GenerateToken(user.Id, claim);
+        var role = string.Empty;
 
-        var refreshToken = RefreshToken.Create(value: token.RefreshToken.RefreshToken,
-            expireOn: token.RefreshToken.ExpireOn);
+        if (request.IsAdmin)
+        {
+            await userManager.AddToRoleAsync(user, RoleName.Admin);
+            var roleResult = await roleManager.FindByNameAsync(RoleName.Admin);
+            role = roleResult?.Name ?? string.Empty;
+        }
+
+        var claim = GenerateClaims(user.Id, user.Email, user.UserName, role, []);
+        var token = tokenService.GenerateToken(user.Id, claim);
+        var refreshToken = RefreshToken.Create(value: token.RefreshToken.RefreshToken, expireOn: token.RefreshToken.ExpireOn);
+
         user.RefreshToken = refreshToken;
         await identityRepository.UpdateAsync(user, cancellationToken);
         return token;
     }
 
-    private static Claim[] GenerateClaims(string userId, string email, string username, Role[] roles) =>
-    [
-        new Claim(JwtRegisteredClaimNames.Sid, userId),
-        new Claim(JwtRegisteredClaimNames.Email, email),
-        new Claim(JwtRegisteredClaimNames.Name, username),
-        new Claim("roles", JsonSerializer.Serialize(roles, JsonSerializerOptions.Default))
-    ];
+    private static List<Claim> GenerateClaims(string userId, string email, string username, string role, string[] permissions)
+    {
+        List<Claim> claims =
+        [
+            new Claim(JwtRegisteredClaimNames.Sid, userId),
+            new Claim(JwtRegisteredClaimNames.Email, email),
+            new Claim(JwtRegisteredClaimNames.Name, username),
+            new Claim(ClaimTypes.Role, role)
+            //new Claim("permissions", JsonSerializer.Serialize(permissions, JsonSerializerOptions.Default))
+        ];
+
+        return claims;
+    }
 }

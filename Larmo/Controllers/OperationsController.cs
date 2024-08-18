@@ -5,13 +5,14 @@ using Larmo.Core.Application.Operations.Update;
 using Larmo.Core.Application.Operations.ViewCollection;
 using Larmo.Core.Application.Operations.ViewDetails;
 using Larmo.Shared.Application.Paging;
+using Larmo.Shared.Common;
 using Larmo.Shared.Presentation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Larmo.Controllers;
 
-[AllowAnonymous]
+[Authorize(Roles = RoleName.Admin)]
 [Route("api/[controller]")]
 public class OperationsController : DefaultController
 {
@@ -46,6 +47,7 @@ public class OperationsController : DefaultController
         return Ok();
     }
 
+    [AllowAnonymous]
     [HttpGet("operation-type-lookup")]
     public async Task<ActionResult<OperationTypeLookupResult[]>> OperationTypeLookup(CancellationToken cancellationToken = default)
     {

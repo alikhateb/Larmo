@@ -8,7 +8,7 @@ public class OperationEntityConfiguration : IEntityTypeConfiguration<Operation>
 {
     public void Configure(EntityTypeBuilder<Operation> builder)
     {
-        builder.ToTable("Operation");
+        builder.ToTable("Operations");
 
         builder.Property(l => l.Amount).IsRequired().HasMaxLength(250);
         builder.Property(l => l.BeneficiaryActivity).IsRequired().HasMaxLength(250);

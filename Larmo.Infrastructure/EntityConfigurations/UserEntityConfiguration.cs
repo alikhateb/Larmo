@@ -1,4 +1,5 @@
 ﻿using Larmo.Domain.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,8 +11,8 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
     {
         builder.ToTable("Users");
 
-        builder.HasMany(user => user.UserRoles)
-            .WithOne(userRole => userRole.User)
+        builder.HasMany<IdentityUserRole<string>>()
+            .WithOne()
             .HasForeignKey(userRole => userRole.UserId);
 
         builder.HasMany(user => user.UserPermissions)
@@ -26,6 +27,6 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
             navigationBuilder.HasKey(t => t.Id);
         });
 
-        builder.Navigation(u => u.UserPermissions).AutoInclude(false);
+        //builder.Navigation(u => u.UserPermissions).AutoInclude(false);
     }
 }

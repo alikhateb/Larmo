@@ -8,11 +8,9 @@ public sealed class UserSpecification : Specification<User>
     public UserSpecification WithGroupsAndRoles(string normalizedEmail)
     {
         Query.Where(user => user.NormalizedEmail == normalizedEmail)
-            .Include(user => user.UserGroups)
-            .ThenInclude(userGroup => userGroup.Group)
-            .ThenInclude(group => group.GroupRoles)
-            .ThenInclude(groupRole => groupRole.Role)
-            .AsSplitQuery();
+            .Include(user => user.UserPermissions)
+            .ThenInclude(userPermissions => userPermissions.Permission)
+            .AsNoTracking();
 
         return this;
     }

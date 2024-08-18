@@ -8,7 +8,7 @@ public class NotificationEntityConfiguration : IEntityTypeConfiguration<Notifica
 {
     public void Configure(EntityTypeBuilder<Notification> builder)
     {
-        builder.ToTable("Notification");
+        builder.ToTable("Notifications");
 
         builder.Property(l => l.City).IsRequired().HasMaxLength(250);
         builder.Property(l => l.Area).IsRequired().HasMaxLength(250);

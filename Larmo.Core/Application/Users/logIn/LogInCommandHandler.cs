@@ -1,9 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text.Json;
 using Larmo.Core.Repository;
 using Larmo.Core.Services;
 using Larmo.Domain.Domain.Identity;
+using Larmo.Shared.Common;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
@@ -26,21 +26,33 @@ internal sealed class LogInCommandHandler(
         if (!isValidPassword)
             throw new InvalidOperationException(message: "invalid password");
 
-        var roles = user.UserGroups.Select(x => x.Group)
-            .SelectMany(g => g.GroupRoles)
-            .Select(r => r.Role)
+        Console.WriteLine(await userManager.IsInRoleAsync(user, RoleName.Admin));
+
+        var permission = user.UserPermissions.Select(x => x.Permission)
+            .Select(r => r.Name)
             .ToArray();
 
-        var claim = GenerateClaims(user.Id, user.Email, user.UserName, roles);
+        var roles = await userManager.GetRolesAsync(user);
+
+        var claim = GenerateClaims(user.Id, user.Email, user.UserName, roles.First(), permission);
         var token = tokenService.GenerateToken(user.Id, claim);
         return token;
     }
 
-    private static Claim[] GenerateClaims(string userId, string email, string username, Role[] roles) =>
-    [
-        new Claim(JwtRegisteredClaimNames.Sid, userId),
-        new Claim(JwtRegisteredClaimNames.Email, email),
-        new Claim(JwtRegisteredClaimNames.Name, username),
-        new Claim("roles", JsonSerializer.Serialize(roles, JsonSerializerOptions.Default))
-    ];
+    private static List<Claim> GenerateClaims(string userId, string email, string username, string role, string[] permissions)
+    {
+        List<Claim> claims =
+        [
+            new Claim(JwtRegisteredClaimNames.Sid, userId),
+            new Claim(JwtRegisteredClaimNames.Email, email),
+            new Claim(JwtRegisteredClaimNames.Name, username),
+            new Claim(ClaimTypes.Role, role)
+            //new Claim("permissions", JsonSerializer.Serialize(permissions, JsonSerializerOptions.Default))
+        ];
+
+        claims.AddRange(permissions.Select(permission => new Claim("permission", permission)));
+
+        return claims;
+    }
+
 }

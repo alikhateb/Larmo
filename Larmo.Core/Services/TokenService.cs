@@ -12,7 +12,7 @@ public class TokenService(IOptions<TokenConfiguration> options)
 {
     private readonly TokenConfiguration _tokenConfiguration = options.Value;
 
-    public AccessTokenResult GenerateToken(string userId, Claim[] claims)
+    public AccessTokenResult GenerateToken(string userId, IEnumerable<Claim> claims)
     {
         var accessToken = CreateToken(claims);
         var refreshToken = GenerateRefreshToken();
@@ -37,7 +37,7 @@ public class TokenService(IOptions<TokenConfiguration> options)
         throw new NotImplementedException();
     }
 
-    private string CreateToken(Claim[] claims)
+    private string CreateToken(IEnumerable<Claim> claims)
     {
         var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenConfiguration.Secret));
         var signingCredentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256);
