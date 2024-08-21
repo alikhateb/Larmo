@@ -1,6 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text.Json;
 using Larmo.Core.Repository;
 using Larmo.Core.Services;
 using Larmo.Domain.Domain.Identity;
@@ -51,7 +50,7 @@ internal sealed class CreateUserCommandHandler(
         var token = tokenService.GenerateToken(user.Id, claim);
         var refreshToken = RefreshToken.Create(value: token.RefreshToken.RefreshToken, expireOn: token.RefreshToken.ExpireOn);
 
-        user.RefreshToken = refreshToken;
+        user.SetRefreshToken(refreshToken);
         await identityRepository.UpdateAsync(user, cancellationToken);
         return token;
     }
@@ -63,9 +62,13 @@ internal sealed class CreateUserCommandHandler(
             new Claim(JwtRegisteredClaimNames.Sid, userId),
             new Claim(JwtRegisteredClaimNames.Email, email),
             new Claim(JwtRegisteredClaimNames.Name, username),
-            new Claim(ClaimTypes.Role, role)
             //new Claim("permissions", JsonSerializer.Serialize(permissions, JsonSerializerOptions.Default))
         ];
+
+        if (!string.IsNullOrEmpty(role))
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
 
         return claims;
     }

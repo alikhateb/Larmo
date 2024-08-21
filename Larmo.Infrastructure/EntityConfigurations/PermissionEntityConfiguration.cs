@@ -27,6 +27,10 @@ public class PermissionEntityConfiguration : IEntityTypeConfiguration<Permission
             .HasMaxLength(100)
             .IsRequired();
 
+        builder.HasOne(p => p.Parent)
+            .WithMany()
+            .HasForeignKey(p => p.DependOn);
+
         builder.HasMany<UserPermission>()
             .WithOne(userPermission => userPermission.Permission)
             .HasForeignKey(userPermission => userPermission.PermissionId);

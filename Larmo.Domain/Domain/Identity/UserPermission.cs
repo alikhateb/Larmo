@@ -6,7 +6,6 @@ public class UserPermission
     {
     }
 
-    public string Id { get; set; }
     public string UserId { get; set; }
     public User User { get; set; }
     public string PermissionId { get; set; }
@@ -16,7 +15,6 @@ public class UserPermission
     {
         var userPermission = new UserPermission
         {
-            Id = Guid.NewGuid().ToString("N"),
             UserId = userId,
             PermissionId = permissionId
         };

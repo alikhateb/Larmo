@@ -10,9 +10,9 @@ public class User : IdentityUser<string>
     {
     }
 
-    public RefreshToken RefreshToken { get; set; }
-    public DateTime CreatedOn { get; set; }
-    public DateTime? ModifiedOn { get; set; }
+    public RefreshToken RefreshToken { get; private set; }
+    public DateTime CreatedOn { get; private set; }
+    public DateTime? ModifiedOn { get; private set; }
     public IReadOnlyCollection<UserPermission> UserPermissions => _userPermissions;
 
     public static User Create(string email, string userName, string phoneNumber)
@@ -39,5 +39,10 @@ public class User : IdentityUser<string>
     {
         var userPermission = UserPermission.Create(Id, permission.Id);
         _userPermissions.Add(userPermission);
+    }
+
+    public void ClearPermission()
+    {
+        _userPermissions.Clear();
     }
 }

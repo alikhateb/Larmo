@@ -23,7 +23,9 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
         {
             navigationBuilder.WithOwner()
                 .HasForeignKey(t => t.UserId);
+
             navigationBuilder.ToTable("User.RefreshTokens");
+
             navigationBuilder.HasKey(t => t.Id);
         });
 

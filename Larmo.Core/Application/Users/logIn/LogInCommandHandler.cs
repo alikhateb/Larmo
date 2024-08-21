@@ -3,7 +3,6 @@ using System.Security.Claims;
 using Larmo.Core.Repository;
 using Larmo.Core.Services;
 using Larmo.Domain.Domain.Identity;
-using Larmo.Shared.Common;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
@@ -26,15 +25,12 @@ internal sealed class LogInCommandHandler(
         if (!isValidPassword)
             throw new InvalidOperationException(message: "invalid password");
 
-        Console.WriteLine(await userManager.IsInRoleAsync(user, RoleName.Admin));
-
         var permission = user.UserPermissions.Select(x => x.Permission)
             .Select(r => r.Name)
             .ToArray();
 
         var roles = await userManager.GetRolesAsync(user);
-
-        var claim = GenerateClaims(user.Id, user.Email, user.UserName, roles.First(), permission);
+        var claim = GenerateClaims(user.Id, user.Email, user.UserName, roles.FirstOrDefault(), permission);
         var token = tokenService.GenerateToken(user.Id, claim);
         return token;
     }
@@ -46,13 +42,16 @@ internal sealed class LogInCommandHandler(
             new Claim(JwtRegisteredClaimNames.Sid, userId),
             new Claim(JwtRegisteredClaimNames.Email, email),
             new Claim(JwtRegisteredClaimNames.Name, username),
-            new Claim(ClaimTypes.Role, role)
             //new Claim("permissions", JsonSerializer.Serialize(permissions, JsonSerializerOptions.Default))
         ];
 
-        claims.AddRange(permissions.Select(permission => new Claim("permission", permission)));
+        if (!string.IsNullOrEmpty(role))
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
+
+        claims.AddRange(permissions.Select(permission => new Claim(nameof(Permission), permission)));
 
         return claims;
     }
-
 }

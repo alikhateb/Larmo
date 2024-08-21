@@ -1,8 +1,10 @@
 ﻿using System.Reflection;
 using System.Text;
 using FluentValidation;
+using Larmo.Core.Application.Behaviour;
 using Larmo.Core.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -58,10 +60,11 @@ public static class DependencyInjection
             };
         });
 
-        //services.AddAuthorization();
-
         services.AddAuthorization(options =>
         {
+            //options.AddPolicy("AtLeast21", policy =>
+            //    policy.RequireRole("admin"));
+
             //options.AddPolicy("AtLeast21", policy =>
             //    policy.Requirements.Add(new MinimumAgeRequirement(21)));
 
@@ -71,5 +74,7 @@ public static class DependencyInjection
             //options.AddPolicy("Something",
             //    policy => policy.RequireClaim("Permission", "CanViewPage", "CanViewAnything"));
         });
+
+        services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
     }
 }
