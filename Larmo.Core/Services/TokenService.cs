@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -34,6 +35,31 @@ public class TokenService(IOptions<TokenConfiguration> options)
 
     public AccessTokenResult RefreshToken(AccessTokenResult model)
     {
+        //if (model == null)
+        //{
+        //    return new TokenModel { Message = "Invalid Request" };
+        //}
+        //var principal = GetPrincipalFromExpiredToken(model.AccessToken);
+        //if (principal == null)
+        //{
+        //    return new TokenModel { Message = "Invalid Refresh Token or Access Token" };
+        //}
+        //string username = principal.Identity.Name;
+        //var user = await _userManager.FindByNameAsync(username);
+        //if (user == null || user.RefreshToken != model.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+        //{
+        //    return new TokenModel { Message = "Invalid Refresh Token or Access Token" };
+        //}
+        //var newAccessToken = CreateToken(principal.Claims.ToList());
+        //var newRefreshToken = GenerateRefreshToken();
+        //user.RefreshToken = newRefreshToken;
+        //await _userManager.UpdateAsync(user);
+        //return new TokenModel
+        //{
+        //    AccessToken = new JwtSecurityTokenHandler().WriteToken(newAccessToken),
+        //    RefreshToken = newRefreshToken
+        //};
+
         throw new NotImplementedException();
     }
 

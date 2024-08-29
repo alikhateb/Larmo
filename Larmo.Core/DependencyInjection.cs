@@ -60,20 +60,7 @@ public static class DependencyInjection
             };
         });
 
-        services.AddAuthorization(options =>
-        {
-            //options.AddPolicy("AtLeast21", policy =>
-            //    policy.RequireRole("admin"));
-
-            //options.AddPolicy("AtLeast21", policy =>
-            //    policy.Requirements.Add(new MinimumAgeRequirement(21)));
-
-            //options.AddPolicy("AtLeast21", policy =>
-            //    policy.AddRequirements(new MinimumAgeRequirement(21)));
-
-            //options.AddPolicy("Something",
-            //    policy => policy.RequireClaim("Permission", "CanViewPage", "CanViewAnything"));
-        });
+        services.AddAuthorization();
 
         services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
     }

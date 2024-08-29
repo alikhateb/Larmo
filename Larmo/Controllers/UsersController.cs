@@ -1,4 +1,5 @@
 ﻿using Larmo.Core.Application.Users.Create;
+using Larmo.Core.Application.Users.CreateAdmin;
 using Larmo.Core.Application.Users.logIn;
 using Larmo.Core.Application.Users.ViewCollection;
 using Larmo.Core.Application.Users.ViewDetails;
@@ -15,14 +16,14 @@ namespace Larmo.Controllers;
 [Route("api/[controller]")]
 public class UsersController : DefaultController
 {
-    //[AllowAnonymous]
-    //[ApiExplorerSettings(IgnoreApi = true)]
-    //[HttpPost("admin")]
-    //public async Task<ActionResult> CreateAdmin(CancellationToken cancellationToken = default)
-    //{
-    //    await Mediator.Send(new CreateAdminCommand(), cancellationToken);
-    //    return Ok();
-    //}
+    [AllowAnonymous]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpPost("admin")]
+    public async Task<ActionResult> CreateAdmin(CancellationToken cancellationToken = default)
+    {
+        await Mediator.Send(new CreateAdminCommand(), cancellationToken);
+        return Ok();
+    }
 
     [HttpPost]
     public async Task<ActionResult<AccessTokenResult>> Add([FromBody] CreateUserCommand command,
