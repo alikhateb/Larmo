@@ -31,10 +31,7 @@ public static class DependencyInjection
 
         services.AddDbContext<ApplicationContext>(options =>
         {
-            options.UseNpgsql(connectionString, builder =>
-            {
-                builder.EnableRetryOnFailure(5);
-            });
+            options.UseSqlServer(connectionString);
         });
     }
 
